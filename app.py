@@ -43,7 +43,7 @@ with conn:
          y_hat_test=model.predict(dl)
          
          dt=pd.concat([date,dl,pd.Series(y_hat_test,name='predicted')],axis='columns')
-         dt['predicted']=dt['predicted'].map({1:'ตก',0:'ไม่ตก'}).astype(object)
+         #dt['predicted']=dt['predicted'].map({1:'ตก',0:'ไม่ตก'}).astype(object)
          print(dt) 
          print(accuracy)
       
