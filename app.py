@@ -8,13 +8,7 @@ app = Flask(__name__)
 
 api=Api(app)
 app.config['SECRET_KEY']='mykey'
-url='https://rmuti-surin-smartfarm.herokuapp.com/api/csv/tutorials'
-drl=pd.read_json(url,orient='records')
 
-
-#print(len(drl))
-drl2=len(drl)
-print(drl2)
 
 
 
@@ -29,6 +23,13 @@ class Weather(Resource):
             from sklearn.neural_network import MLPClassifier
             from sklearn.metrics import accuracy_score
             conn = pymysql.connect(db='heroku_78638205065f537', user='bc06134d8f3e1f', passwd='550425d9', host='us-cdbr-east-04.cleardb.com')
+            url='https://rmuti-surin-smartfarm.herokuapp.com/api/csv/tutorials'
+            drl=pd.read_json(url,orient='records')
+
+
+            #print(len(drl))
+            drl2=len(drl)
+            print(drl2)
             #global j
             #if not drl:
                     #return jsonify(j)
