@@ -64,7 +64,7 @@ class Weather(Resource):
                 print(accuracy)
                 print(dt.dtypes)
                 #dt['predicted']=dt['predicted'].map({'ตก':1,'ไม่ตก':0}).astype(int)
-                dh=dt.to_json(orient='index')
+                dh=dt.to_json(orient='records')
                 j=json.loads(dh)
                 print(json.dumps(j,indent=4))           
                 return jsonify(j)
