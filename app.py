@@ -33,7 +33,7 @@ class Weather(Resource):
             #if not drl:
                     #return jsonify(j)
             if drl2==0 :
-                return jsonify("ไม่พบข้อมูลที่ร้องขอ")
+                return jsonify()
             with conn:
                 cur=conn.cursor()
                 sql="select * from weatherv4"
