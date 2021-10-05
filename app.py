@@ -52,7 +52,7 @@ class Weather(Resource):
                 accuracy=model.score(X_train,y_train)
                 dl=drl
                 date=dl['Date']
-                user=dl['user_id']
+                user=dl['userId']
                 dl = dl[['MinTemp','MaxTemp','Rainfall','Evaporation','Sunshine','WindGustSpeed','WindSpeed9am','WindSpeed3pm','Humidity9am','Humidity3pm','Pressure9am','Pressure3pm','Cloud9am','Cloud3pm','Temp9am','Temp3pm','RainToday','RISK_MM']]
                 print(dl)       
                 dl['RainToday']=dl['RainToday'].map({'Yes':1,'No':0}).astype(int)          
