@@ -52,14 +52,15 @@ class Weather(Resource):
                 accuracy=model.score(X_train,y_train)
                 dl=drl
                 date=dl['Date']
-                dl = dl[['MinTemp','MaxTemp','Rainfall','Evaporation','Sunshine','WindGustSpeed','WindSpeed9am','WindSpeed3pm','Humidity9am','Humidity3pm','Pressure9am','Pressure3pm','Cloud9am','Cloud3pm','Temp9am','Temp3pm','RainToday','RISK_MM','user_id']]
+                user=dl['user_id']
+                dl = dl[['MinTemp','MaxTemp','Rainfall','Evaporation','Sunshine','WindGustSpeed','WindSpeed9am','WindSpeed3pm','Humidity9am','Humidity3pm','Pressure9am','Pressure3pm','Cloud9am','Cloud3pm','Temp9am','Temp3pm','RainToday','RISK_MM']]
                 print(dl)       
                 dl['RainToday']=dl['RainToday'].map({'Yes':1,'No':0}).astype(int)          
                 y_predict=model.predict(dl)
                 print(y_predict)  
                 y_hat_test=model.predict(dl)
                 global dt 
-                dt=pd.concat([date,dl,pd.Series(y_hat_test,name='predicted')],axis='columns')
+                dt=pd.concat([user,date,dl,pd.Series(y_hat_test,name='predicted')],axis='columns')
                 print(dt)
                 print(accuracy)
                 print(dt.dtypes)
