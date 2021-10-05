@@ -75,7 +75,7 @@ class Weather(Resource):
                 con = create_engine(f'mysql+pymysql://{user}:{passwd}@{host}/{dbname}')
                 print(con)                               
                                              
-                dd.to_sql('predicted',con, if_exists='replace',index=False)
+                dd.to_sql('predicteds',con, if_exists='replace',index=False)
                 print(dd)
                 print(accuracy)
                 #print(dt.dtypes)
