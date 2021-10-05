@@ -17,7 +17,8 @@ class Weather(Resource):
             import os
             import pandas as pd
             from scipy.optimize.optimize import main
-            import pymysql
+            import pymysql 
+            from sqlalchemy import create_engine
             import json
             from sqlalchemy import sql
             from sklearn.neural_network import MLPClassifier
@@ -37,7 +38,7 @@ class Weather(Resource):
                 return jsonify()
             with conn:
                 cur=conn.cursor()
-                sql="select * from weatherv4"
+                sql="select * from weatherv4s"
                 df=pd.read_sql(sql, conn)
                 df=df[['MinTemp','MaxTemp','Rainfall','Evaporation','Sunshine','WindGustSpeed','WindSpeed9am','WindSpeed3pm','Humidity9am','Humidity3pm','Pressure9am','Pressure3pm','Cloud9am','Cloud3pm','Temp9am','Temp3pm','RainToday','RISK_MM','RainTomorrow']]            
                 df['RainTomorrow']=df['RainTomorrow'].map({'Yes':1,'No':0}).astype(int)
@@ -61,9 +62,23 @@ class Weather(Resource):
                 y_hat_test=model.predict(dl)
                 global dt 
                 dt=pd.concat([user,date,dl,pd.Series(y_hat_test,name='predicted')],axis='columns')
-                print(dt)
+                #print(dt.dtypes)
+                dt_sum=dt['predicted'].sum()
+                if dt_sum==0:
+                    print("ลองอีกครั้ง")
+                    return jsonify("ลองอีกครั้ง")
+                dd=dt
+                dbname='heroku_78638205065f537'
+                user='bc06134d8f3e1f'
+                passwd='550425d9' 
+                host='us-cdbr-east-04.cleardb.com'
+                con = create_engine(f'mysql+pymysql://{user}:{passwd}@{host}/{dbname}')
+                print(con)                               
+                                             
+                dd.to_sql('predicted',con, if_exists='replace',index=False)
+                print(dd)
                 print(accuracy)
-                print(dt.dtypes)
+                #print(dt.dtypes)
                 #dt['predicted']=dt['predicted'].map({'ตก':1,'ไม่ตก':0}).astype(int)
                 dh=dt.to_json(orient='records')
                 j=json.loads(dh)
